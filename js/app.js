@@ -47,6 +47,29 @@ function moveGame (ev) {
 
   // 5. updating the screen based on new board state
   renderTiles();
+  updateScore();
+
+  // 6. win or lose
+  checkIfDone();
+}
+
+
+function updateScore () {
+  $('#score-display').html(myGlobalGame.score);
+}
+
+function checkIfDone () {
+  if (myGlobalGame.hasWon) {
+    $('#game-board').remove();
+    var winnerHtml = '<img src="https://media.giphy.com/media/xTiTnz33weTH3K8Uvu/giphy.gif" alt="Winner">';
+    $('body').append(winnerHtml);
+  }
+
+  else if (myGlobalGame.hasLost) {
+    $('#game-board').remove();
+    var loserHtml = '<img src="https://media.giphy.com/media/l3q2K12v7LgvwlATC/giphy.gif" alt="Loser">';
+    $('body').append(loserHtml);
+  }
 }
 
 
@@ -65,6 +88,3 @@ function renderTiles () {
     });
   });
 }
-
-
-// 6. win or lose (maybe)
