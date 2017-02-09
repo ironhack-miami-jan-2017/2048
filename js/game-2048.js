@@ -9,6 +9,7 @@ function Game2048 () {
 
   this.hasWon = false;
   this.hasLost = false;
+  this.boardHasChanged = false;
 
   this._generateTile();
   this._generateTile();
@@ -63,6 +64,7 @@ Game2048.prototype._renderBoard = function () {
 
 Game2048.prototype.moveLeft = function () {
   var updatedBoard = [];
+  var theGame = this;
 
   this.board.forEach(function (row) {
     // 1. Remove empties from row
@@ -94,6 +96,10 @@ Game2048.prototype.moveLeft = function () {
     });
 
 
+    if (moved.length !== row.length) {
+      theGame.boardHasChanged = true;
+    }
+
     // 4. push() nulls until row has length 4 again
     while (moved.length < 4) {
       moved.push(null);
@@ -108,6 +114,7 @@ Game2048.prototype.moveLeft = function () {
 
 Game2048.prototype.moveRight = function () {
   var updatedBoard = [];
+  var theGame = this;
 
   this.board.forEach(function (row) {
     // 1. Remove empties from row
@@ -138,6 +145,9 @@ Game2048.prototype.moveRight = function () {
       }
     });
 
+    if (moved.length !== row.length) {
+      theGame.boardHasChanged = true;
+    }
 
     // 4. push() nulls until row has length 4 again
     while (moved.length < 4) {
@@ -173,4 +183,31 @@ Game2048.prototype.moveDown = function () {
   this._transposeMatrix();
   this.moveRight();
   this._transposeMatrix();
+};
+
+
+Game2048.prototype.move = function (direction) {
+  if (this.hasWon || this.hasLost) {
+    return;
+  }
+
+  switch (direction) {
+    case 'up':
+      this.moveUp();
+      break;
+    case 'down':
+      this.moveDown();
+      break;
+    case 'left':
+      this.moveLeft();
+      break;
+    case 'right':
+      this.moveRight();
+      break;
+  }
+
+  if (this.boardHasChanged) {
+    this._generateTile();
+    this.boardHasChanged = false;
+  }
 };
