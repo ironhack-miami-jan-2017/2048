@@ -59,6 +59,8 @@ Game2048.prototype._renderBoard = function () {
   this.board.forEach(function(row) {
     console.log(row);
   });
+
+  console.log('Current Score: ' + this.score);
 };
 
 
@@ -81,6 +83,8 @@ Game2048.prototype.moveLeft = function () {
       if (newRow[i] === newRow[i + 1]) {
         newRow[i] *= 2;
         newRow[i + 1] = null;
+
+        theGame._updateScore(newRow[i]);
       }
     }
 
@@ -131,6 +135,8 @@ Game2048.prototype.moveRight = function () {
       if (newRow[i] === newRow[i - 1]) {
         newRow[i] *= 2;
         newRow[i - 1] = null;
+
+        theGame._updateScore(newRow[i]);
       }
     }
 
@@ -209,5 +215,14 @@ Game2048.prototype.move = function (direction) {
   if (this.boardHasChanged) {
     this._generateTile();
     this.boardHasChanged = false;
+  }
+};
+
+
+Game2048.prototype._updateScore = function (points) {
+  this.score += points;
+
+  if (points === 2048) {
+    this.hasWon = true;
   }
 };
