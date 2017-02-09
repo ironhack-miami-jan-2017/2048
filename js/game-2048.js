@@ -238,10 +238,10 @@ Game2048.prototype._isGameLost = function () {
 
   this.board.forEach(function (row, rowIndex) {
     row.forEach(function (cell, colIndex) {
-      var current = that.board[rowIndex][colIndex];
+      var current = theGame.board[rowIndex][colIndex];
       var top, bottom, left, right;
 
-      if (that.board[rowIndex][colIndex - 1]) {
+      if (theGame.board[rowIndex][colIndex - 1]) {
         left = theGame.board[rowIndex][colIndex - 1];
       }
       if (theGame.board[rowIndex][colIndex + 1]) {
