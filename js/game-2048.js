@@ -214,6 +214,7 @@ Game2048.prototype.move = function (direction) {
 
   if (this.boardHasChanged) {
     this._generateTile();
+    this._isGameLost();
     this.boardHasChanged = false;
   }
 };
@@ -225,4 +226,37 @@ Game2048.prototype._updateScore = function (points) {
   if (points === 2048) {
     this.hasWon = true;
   }
+};
+
+
+Game2048.prototype._isGameLost = function () {
+  if (this._getAvailablePosition() !== null) {
+    return;
+  }
+
+  var theGame = this;
+
+  this.board.forEach(function (row, rowIndex) {
+    row.forEach(function (cell, colIndex) {
+      var current = that.board[rowIndex][colIndex];
+      var top, bottom, left, right;
+
+      if (that.board[rowIndex][colIndex - 1]) {
+        left = theGame.board[rowIndex][colIndex - 1];
+      }
+      if (theGame.board[rowIndex][colIndex + 1]) {
+        right = theGame.board[rowIndex][colIndex + 1];
+      }
+      if (theGame.board[rowIndex - 1]) {
+        top = theGame.board[rowIndex - 1][colIndex];
+      }
+      if (theGame.board[rowIndex + 1]) {
+        bottom = theGame.board[rowIndex + 1][colIndex];
+      }
+
+      if (current === top || current === bottom || current === left || current === right) {
+        theGame.hasLost = true;
+      }
+    });
+  });
 };
