@@ -62,13 +62,13 @@ function checkIfDone () {
   if (myGlobalGame.hasWon) {
     $('#game-board').remove();
     var winnerHtml = '<img src="https://media.giphy.com/media/xTiTnz33weTH3K8Uvu/giphy.gif" alt="Winner">';
-    $('body').append(winnerHtml);
+    $('#container').append(winnerHtml);
   }
 
   else if (myGlobalGame.hasLost) {
     $('#game-board').remove();
     var loserHtml = '<img src="https://media.giphy.com/media/l3q2K12v7LgvwlATC/giphy.gif" alt="Loser">';
-    $('body').append(loserHtml);
+    $('#container').append(loserHtml);
   }
 }
 
