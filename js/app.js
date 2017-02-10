@@ -11,7 +11,19 @@ $(document).ready(function () {
 
   // 3. handle keyboard events
   $(document).keydown(moveGame);
+
+  loadSounds();
 });
+
+
+function loadSounds () {
+  ion.sound({
+    sounds: [ { name: 'snap' }, { name: 'tap' }, { name: 'beer_can_opening' }, ],
+    path: 'lib/ion-sound/sounds/',
+    preload: true,
+    volume: 1.0,
+  });
+}
 
 
 function moveGame (ev) {
@@ -66,6 +78,7 @@ function checkIfDone () {
   }
 
   else if (myGlobalGame.hasLost) {
+    ion.sound.play('beer_can_opening');
     $('#game-board').remove();
     var loserHtml = '<img src="https://media.giphy.com/media/l3q2K12v7LgvwlATC/giphy.gif" alt="Loser">';
     $('#container').append(loserHtml);
